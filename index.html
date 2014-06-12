@@ -7,21 +7,48 @@
 
   </head>
   <body >
-    <button id="send">Send</button>
+    <button id="cors-no-preflight-with-header">cors-no-preflight-with-header</button>
+    <button id="cors-no-preflight-without-header">cors-no-preflight-without-header</button>
+    <button id="cors-preflight-with-header">cors-preflight-with-header</button>
+    <button id="cors-preflight-without-header">cors-preflight-without-header</button>
   </body>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script type="text/javascript">
-    $("#send").click(function() {
+    $("#cors-no-preflight-with-header").click(function() {
       $.ajax({
-        url: "http://localhost:2222/corstest",
+        url: "http://localhost:2222/cors-no-preflight-with-header",
       })
         .done(function( data, textStatus, jqXHR ) {
-          console.log(jqXHR.getAllResponseHeaders());
-          console.log(jqXHR.getResponseHeader('My-Custom-Header'));
-          alert(JSON.stringify(data));
-        })
-        .error(function( error ) {
-          alert(JSON.stringify(error));
+          alert(JSON.stringify(jqXHR.getAllResponseHeaders()));
+        });   
+    });
+
+    $("#cors-no-preflight-without-header").click(function() {
+      $.ajax({
+        url: "http://localhost:2222/cors-no-preflight-without-header",
+      })
+        .done(function( data, textStatus, jqXHR ) {
+          alert(JSON.stringify(jqXHR.getAllResponseHeaders()));
+        });   
+    });
+
+    $("#cors-preflight-with-header").click(function() {
+      $.ajax({
+        url: "http://localhost:2222/cors-preflight-with-header",
+        method: 'PUT'
+      })
+        .done(function( data, textStatus, jqXHR ) {
+          alert(JSON.stringify(jqXHR.getAllResponseHeaders()));
+        });   
+    });
+
+    $("#cors-preflight-without-header").click(function() {
+      $.ajax({
+        url: "http://localhost:2222/cors-preflight-without-header",
+        method: 'PUT'
+      })
+        .done(function( data, textStatus, jqXHR ) {
+          alert(JSON.stringify(jqXHR.getAllResponseHeaders()));
         });   
     });
 

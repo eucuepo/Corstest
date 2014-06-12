@@ -4,16 +4,9 @@ var app = express();
 var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-    res.header('Access-Control-Expose-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, My-Custom-Header');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, My-Custom-Header');
     
-    // intercept OPTIONS method
-    if ('OPTIONS' == req.method) {
-      res.send(200);
-    }
-    else {
-      next();
-    }
+    next();
 };
 
 app.configure(function () {
@@ -31,9 +24,37 @@ var token = {
   "token_type" : "Bearer"
 }
 
-app.get('/corstest', function(req, res){
+app.get('/cors-no-preflight-with-header', function(req, res){
+  res.header('Access-Control-Expose-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, My-Custom-Header');
   res.header('My-Custom-Header', 'headervalue')
   res.send(token);
+});
+
+app.get('/cors-no-preflight-without-header', function(req, res){
+  res.header('My-Custom-Header', 'headervalue')
+  res.send(token);
+});
+
+app.put('/cors-preflight-with-header', function(req, res){
+  res.header('Access-Control-Expose-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, My-Custom-Header');
+  res.header('My-Custom-Header', 'headervalue')
+  res.send(token);
+});
+
+app.options('/cors-preflight-with-header', function(req, res){
+  res.header('Access-Control-Expose-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, My-Custom-Header');
+  res.header('My-Custom-Header', 'headervalue')
+  res.send(200);
+});
+
+app.put('/cors-preflight-without-header', function(req, res){
+  res.send(token);
+});
+
+app.options('/cors-preflight-without-header', function(req, res){
+  res.header('Access-Control-Expose-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, My-Custom-Header');
+  res.header('My-Custom-Header', 'headervalue')
+  res.send(200);
 });
 
 
