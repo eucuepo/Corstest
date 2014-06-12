@@ -11,6 +11,7 @@
     <button id="cors-no-preflight-without-header">cors-no-preflight-without-header</button>
     <button id="cors-preflight-with-header">cors-preflight-with-header</button>
     <button id="cors-preflight-without-header">cors-preflight-without-header</button>
+    <button id="cors-preflight-with-header-not-options">cors-preflight-with-header-not-options</button>
   </body>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script type="text/javascript">
@@ -45,6 +46,16 @@
     $("#cors-preflight-without-header").click(function() {
       $.ajax({
         url: "http://localhost:2222/cors-preflight-without-header",
+        method: 'PUT'
+      })
+        .done(function( data, textStatus, jqXHR ) {
+          alert(JSON.stringify(jqXHR.getAllResponseHeaders()));
+        });   
+    });
+
+    $("#cors-preflight-with-header-not-options").click(function() {
+      $.ajax({
+        url: "http://localhost:2222/cors-preflight-with-header-not-options",
         method: 'PUT'
       })
         .done(function( data, textStatus, jqXHR ) {

@@ -46,6 +46,16 @@ app.options('/cors-preflight-with-header', function(req, res){
   res.send(200);
 });
 
+app.put('/cors-preflight-with-header-not-options', function(req, res){
+  res.header('Access-Control-Expose-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, My-Custom-Header');
+  res.header('My-Custom-Header', 'headervalue');
+  res.send(token);
+});
+
+app.options('/cors-preflight-with-header-not-options', function(req, res){
+  res.send(200);
+});
+
 app.put('/cors-preflight-without-header', function(req, res){
   res.header('My-Custom-Header', 'headervalue');
   res.send(token);
